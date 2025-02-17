@@ -26,3 +26,20 @@ aml_samples = df_meta[df_meta["PatientID"].isin(patient_id_with_AML)][["PatientI
 
 print(aml_samples)
 
+#Making a dictionary with Patient ID and day_relative_to_hct
+relative_days_per_patient ={}
+
+for _, row in aml_samples.iterrows():
+    patient = row["PatientID"]
+    day_relative = row["day_relative_to_hct"]
+    
+    if patient in relative_days_per_patient:
+        relative_days_per_patient[patient].append(day_relative)
+    else:
+        relative_days_per_patient[patient] = [day_relative]
+        
+
+for patient, days in relative_days_per_patient.items():
+    print(f"{patient}: {', '.join(map(str, days))}")
+
+#what is the next step 
