@@ -22,7 +22,7 @@ print(disease_range)#Conclusion: 2 groups, AML and others. I will go with AML.
 patient_id_with_AML = df_patient[df_patient["disease_simple"] == "AML"]["PatientID"]
 
 #Getting sample ID, day relative to HCT and Accession number of AML patients
-aml_samples = df_meta[df_meta["PatientID"].isin(patient_id_with_AML)][["PatientID", "sampleid", "day_relative_to_hct", "Accession"]]
+aml_samples = df_meta[df_meta["PatientID"].isin(patient_id_with_AML)][["PatientID", "sampleid", "day_relative_to_hct", "Accession_shotgun"]]
 
 #print(aml_samples)
 
@@ -32,7 +32,7 @@ relative_days_per_patient ={}
 for _, row in aml_samples.iterrows():
     patient = row["PatientID"]
     day_relative = row["day_relative_to_hct"]
-    accession = row["Accession"]
+    accession = row["Accession_shotgun"]
     
     if patient in relative_days_per_patient:
         relative_days_per_patient[patient].append((day_relative, accession))
@@ -58,6 +58,7 @@ filtered_accessions = {accession for data in filtered_relative_days_per_patient.
 # Save filtered Accession numbers to a text file
 with open("accessions.txt", "w") as f:
     for accession in filtered_accessions:
-        f.write(accession + "\n")
+        if pd.notna(accession):
+            f.write(accession + "\n")
 
 print("Filtered Accession numbers saved to accessions.txt")
