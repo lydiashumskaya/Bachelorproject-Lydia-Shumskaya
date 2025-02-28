@@ -4,7 +4,7 @@ import pandas as pd
 def split_accessions(file_path, chunk_size=20):
     df = pd.read_csv(file_path, header=None, names=['accession'])
     
-    # Folder for output
+    #Folder for output
     output_folder = 'accession_numbers'
     
     for i in range(0, len(df), chunk_size):
@@ -16,5 +16,5 @@ def split_accessions(file_path, chunk_size=20):
         chunk.to_csv(output_filename, index=False, header=False)
         print(f"Created {output_filename}")
 
-# Run the function with the accession file
+#Run the function with the accession file
 split_accessions("accessions.txt")
