@@ -12,5 +12,5 @@ def split_accessions(file_path, chunk_size=20):
         chunk.to_csv(output_filename, index=False, header=False)
         print(f"Created {output_filename}")
 
-# Run the function with the given file path
+#Run the function with accession file 
 split_accessions("accessions.txt")
