@@ -2,63 +2,52 @@
 
 import pandas as pd
 
-#Loading data about patients 
+#Loading data about patients
 df_patient = pd.read_csv("tblpatient.csv")
 diseases = df_patient["disease_simple"]
 
-#loading meta data
+#Loading meta data
 df_meta = pd.read_csv("tblmeta_data.csv")
 
-disease_range = {}
-for disease in diseases:
-    if disease in disease_range:
-        disease_range[disease] += 1
-    else:
-        disease_range[disease] = 1
-
-print(disease_range)#Conclusion: 2 groups, AML and others. I will go with AML. 
-
-#Getting patient ID 
+#Getting patient IDs for AML patients
 patient_id_with_AML = df_patient[df_patient["disease_simple"] == "AML"]["PatientID"]
 
-#Getting sample ID, day relative to HCT and Accession number of AML patients
+#Getting sample ID, day relative to HCT, and Accession number of AML patients
 aml_samples = df_meta[df_meta["PatientID"].isin(patient_id_with_AML)][["PatientID", "sampleid", "day_relative_to_hct", "Accession_shotgun"]]
 
-#print(aml_samples)
+#Removing samples with NaN accession numbers
+aml_samples = aml_samples.dropna(subset=["Accession_shotgun"])
 
-#Making a dictionary with Patient ID and day_relative_to_hct
-relative_days_per_patient ={}
-
+#Creating a temporary dictionary to store all samples per patient
+temp_patient_samples = {}
 for _, row in aml_samples.iterrows():
     patient = row["PatientID"]
     day_relative = row["day_relative_to_hct"]
     accession = row["Accession_shotgun"]
     
-    if patient in relative_days_per_patient:
-        relative_days_per_patient[patient].append((day_relative, accession))
+    if patient in temp_patient_samples:
+        temp_patient_samples[patient].append((day_relative, accession))
     else:
-        relative_days_per_patient[patient] = [(day_relative, accession)]
-        
-#Filtering patients that have only before or only after samples. As well as patients with 1 sample. 
-filtered_relative_days_per_patient = {}
+        temp_patient_samples[patient] = [(day_relative, accession)]
 
-for patient, data in relative_days_per_patient.items():
-    days = [d[0] for d in data]  # Extract only the days for filtering
-    if len(days) > 1 and any(d < 0 for d in days) and any(d > 0 for d in days):
-        filtered_relative_days_per_patient[patient] = data
+#Filtering patients who have at least one sample before and after HCT, and more than one sample
+filtered_relative_days_per_patient = {
+    patient: data for patient, data in temp_patient_samples.items()
+    if len(data) > 1 and any(d[0] < 0 for d in data) and any(d[0] > 0 for d in data)
+}
 
-# Printing the filtered dictionary
-# for patient, data in filtered_relative_days_per_patient.items():
-#     formatted_data = ", ".join([f"({day}, {accession})" for day, accession in data])
-#     print(f"{patient}: {formatted_data}")
+#Printing the filtered dictionary
+for patient, data in filtered_relative_days_per_patient.items():
+    formatted_data = ", ".join([f"({day}, {accession})" for day, accession in data])
+    print(f"{patient}: {formatted_data}")
 
-#Filter Accession numbers
-filtered_accessions = {accession for data in filtered_relative_days_per_patient.values() for _, accession in data}
+#Extracting and saving filtered Accession numbers
+filtered_accessions = {accession for data in filtered_relative_days_per_patient.values() for _, accession in data if pd.notna(accession)}
+print(len(filtered_accessions))
 
-# Save filtered Accession numbers to a text file
 with open("accessions.txt", "w") as f:
     for accession in filtered_accessions:
-        if pd.notna(accession):
-            f.write(accession + "\n")
+        f.write(accession + "\n")
 
-print("Filtered Accession numbers saved to accessions.txt")
+
+
