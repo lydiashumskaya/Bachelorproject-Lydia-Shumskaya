@@ -5,6 +5,7 @@ Project: "Predicted number of MHCII-binding gut microbiome peptides in AML patie
 Discription: 
 This script filters and extracts accession numbers of 
 shotgun metagenomic sequenced samples from AML patient based on the metadata.
+shotgun metagenomic sequenced samples from AML patients based on the metadata.
 
 tblmeta_data.csv and tblpatient.csv can be downloaded from:
 https://figshare.com/articles/dataset/High-resolution_analyses_of_associations_between_medications_microbiome_and_mortality_in_cancer_patients/21657806/1?file=38397710
