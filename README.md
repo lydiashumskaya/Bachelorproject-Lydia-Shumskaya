@@ -20,7 +20,7 @@ This repository contains the scripts used to analyse microbial metagenomic data 
   - robCompositions  
   - compositions
   - nlme
-- **Python libraries:**
+- **Python packages:**
   - pandas
   - scipy.stats
   - seaborn
