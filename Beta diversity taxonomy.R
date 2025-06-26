@@ -1,5 +1,7 @@
 #Author: Lydia Shumskaya
-#In house script was used as reference 
+#In house script was used as reference
+#A tutorial for using the lme function from the nlme package was used as reference: 
+#https://www.crumplab.com/psyc7709_2019/book/docs/a-tutorial-for-using-the-lme-function-from-the-nlme-package-.html
 #Project: "Predicted number of MHCII-binding gut microbiome peptides in AML patients decrease after allo-HCT"
 
 #Description:
