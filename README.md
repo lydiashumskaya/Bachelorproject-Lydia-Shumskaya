@@ -48,3 +48,5 @@ This repository contains the scripts used to analyze microbial metagenomic data 
 | `extract_annotation.sh`        | Extracts and renames mg.KEGG.counts.tsv file from IMP3 output directory                                                       |
 | `extract_counts.sh`            | Extracts and renames mg.CDS_counts.tsv file from IMP3 output directory                                                       |
 | `extract_fasta.sh`             | Extracts and renames prokka.faa file from IMP3 output directory                                                              |
+| `extract_moTUs.sh`             | extracts and renames mg.mOTU.counts.tsv file from IMP3 output directory                                                              |
+| `prep.assembly.anno.tax.yaml`             | IMP3 config file                                                             |
