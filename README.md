@@ -19,6 +19,7 @@ This repository contains the scripts used to analyse microbial metagenomic data 
   - tidyr  
   - robCompositions  
   - compositions
+  - nlme
 - **Python libraries:**
   - pandas
   - scipy.stats
