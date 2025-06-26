@@ -1,0 +1,81 @@
+steps: "preprocessing assembly analysis taxonomy"
+preprocessing_filtering: true
+mem:
+  normal_mem_per_core_gb: 8
+  big_mem_total_gb: 64
+  big_mem_cores: 8
+  big_mem_per_core_gb: 8
+tmp_dir: tmp
+raws: 
+  Metagenomics: "./ACCESSION_ID_1.fastq.gz ./ACCESSION_ID_2.fastq.gz"
+sample: ACCESSION_ID
+outputdir: "./output_ACCESSION_ID"
+summarydir: ""
+summary_steps: "stats vis"
+db_path: "/zfs/omics/projects/metatools/TOOLS/IMP3/IMP_DBs"
+trimmomatic:
+  adapter: 
+    mg: "TruSeq3-PE"
+    mt: "TruSeq3-PE"
+  leading: 20
+  minlen: 40
+  palindrome_clip_threshold: 30
+  simple_clip_threshold: 10
+  trailing: 20
+  seed_mismatch: 2
+  window_size: 1
+  window_quality: 3
+  strictness: 0.5
+  target_length: 40
+nextseq: true
+filtering:
+  filter: "phiX174 hg38"
+sortmerna:
+  files:
+    - rfam-5.8s-database-id98
+    - silva-arc-16s-id95
+    - silva-bac-16s-id90
+    - silva-euk-18s-id95
+    - rfam-5s-database-id98
+    - silva-arc-23s-id98
+    - silva-bac-23s-id98
+    - silva-euk-28s-id98
+assembly: 
+  hybrid: false
+  assembler: megahit
+  merge: "" # how to do merge(assembly A, assembly B from reads not mapping to A); none or "" = use only assembly A
+  mink: 25
+  maxk: 99
+  step: 4
+hmm_DBs: "KEGG essential"
+hmm_settings: 
+  KEGG:
+    cutoff: ""
+    trim: "--trimall"
+  essential:
+    cutoff: "--cut_tc"
+    trim: ""
+COGS: "COG0012 COG0018 COG0215 COG0525 COG0541 COG0016 COG0172 COG0495 COG0533 COG0552"
+featureCountsStranding:
+  mg: 0
+proteomics:
+  filter_N_peptides: 2
+  host_proteome: ""
+  insert_variants: false
+binning:
+  binners: "MaxBin MetaBAT binny"
+  MaxBin:
+    cutoff: 1000
+  MetaBAT:
+    cutoff: 1500
+  binny:
+    pk: 10
+    nn: 4
+  vizbin:
+    dimension: 50
+    kmer: 5
+    perp: 30
+    cutoff: 1000
+krakendb: kraken_pfp8
+eukdetect:
+  run_eukdetect: false
