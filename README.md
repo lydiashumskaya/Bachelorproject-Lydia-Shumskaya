@@ -7,7 +7,7 @@
 ## Supervised by Dr. rer. nat. A.U.S. Heintz Buschart
 
 ## Description  
-This repository contains the scripts used to analyse microbial metagenomic data to compare MHCII binding prediction in AML patients before and after allogeneic hematopoietic stem cell transplantation (allo-HCT).
+This repository contains the scripts used to analyse microbial metagenomic data to compare MHCII binding epitope prediction in AML patients pre- and post-allogeneic hematopoietic stem cell transplantation (allo-HCT).
 
 ## Requirements  
 - **R version:** 4.3.3
