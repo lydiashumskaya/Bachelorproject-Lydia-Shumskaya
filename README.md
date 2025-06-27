@@ -20,6 +20,7 @@ This repository contains the scripts used to analyse microbial metagenomic data 
   - robCompositions  
   - compositions
   - nlme
+  - ggplot2
 - **Python packages:**
   - pandas
   - scipy.stats
