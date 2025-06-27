@@ -13,6 +13,7 @@ library(vegan)
 library(ape)
 library(tidyr)
 library(nlme)
+library(ggplot2)
 
 #importing motus and metadata 
 motus = t(as.matrix(read.delim("all.motus.tsv",row.names=1)))
